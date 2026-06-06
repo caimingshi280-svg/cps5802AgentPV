@@ -1,0 +1,132 @@
+{
+  "system_type": "BESS",
+  "variant": "pytorch_fp32",
+  "split": "test",
+  "model_path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_bess_best.weights.pt",
+  "classification_report": {
+    "system_type": "BESS",
+    "split": "test",
+    "n_samples": 3395,
+    "n_classes": 5,
+    "accuracy": 0.998527,
+    "macro_f1": 0.998578,
+    "weighted_f1": 0.998527,
+    "per_class": [
+      {
+        "label": "BESS_Normal",
+        "label_id": 0,
+        "precision": 0.996089,
+        "recall": 0.997389,
+        "f1": 0.996738,
+        "support": 766
+      },
+      {
+        "label": "Capacity_fade",
+        "label_id": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 634
+      },
+      {
+        "label": "Internal_resistance_increase",
+        "label_id": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 709
+      },
+      {
+        "label": "Thermal_anomaly",
+        "label_id": 3,
+        "precision": 0.996918,
+        "recall": 0.995385,
+        "f1": 0.996151,
+        "support": 650
+      },
+      {
+        "label": "Cell_imbalance",
+        "label_id": 4,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 636
+      }
+    ]
+  },
+  "confusion_matrix": {
+    "labels": [
+      "BESS_Normal",
+      "Capacity_fade",
+      "Internal_resistance_increase",
+      "Thermal_anomaly",
+      "Cell_imbalance"
+    ],
+    "matrix": [
+      [
+        764,
+        0,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        634,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        709,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        647,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        636
+      ]
+    ]
+  },
+  "latency": {
+    "n_runs": 1000,
+    "n_warmup": 50,
+    "batch_size": 1,
+    "window_size": 60,
+    "in_channels": 8,
+    "mean_ms": 0.5712,
+    "p50_ms": 0.5434,
+    "p95_ms": 0.8197,
+    "p99_ms": 1.6406,
+    "min_ms": 0.3806,
+    "max_ms": 2.5349,
+    "std_ms": 0.2164,
+    "extra": {
+      "system_type": "BESS",
+      "variant": "pytorch_fp32",
+      "model_path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_bess_best.weights.pt"
+    }
+  },
+  "model_size": {
+    "path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_bess_best.weights.pt",
+    "bytes": 192584,
+    "kib": 188.0703,
+    "mib": 0.1837,
+    "budget_mib": 50.0,
+    "within_budget": true
+  },
+  "pytorch_full_checkpoint_path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_bess_best.pt",
+  "pytorch_full_checkpoint_bytes": 192848
+}

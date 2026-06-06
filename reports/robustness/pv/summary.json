@@ -1,0 +1,356 @@
+{
+  "system": "PV",
+  "onnx_path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_pv.onnx",
+  "ood_system": "BESS",
+  "n_test": 4211,
+  "baseline": {
+    "name": "clean_baseline",
+    "macro_f1": 0.9993,
+    "accuracy": 0.9993,
+    "n_samples": 4211,
+    "mean_confidence": 9.7434
+  },
+  "distribution_shift_by_condition": {
+    "high_irradiance": {
+      "name": "condition::high_irradiance",
+      "macro_f1": 1.0,
+      "accuracy": 1.0,
+      "n_samples": 2039,
+      "mean_confidence": 9.6228
+    },
+    "high_temperature": {
+      "name": "condition::high_temperature",
+      "macro_f1": 1.0,
+      "accuracy": 1.0,
+      "n_samples": 854,
+      "mean_confidence": 9.3717
+    },
+    "low_irradiance": {
+      "name": "condition::low_irradiance",
+      "macro_f1": 0.9979,
+      "accuracy": 0.9977,
+      "n_samples": 1318,
+      "mean_confidence": 10.1709
+    }
+  },
+  "missing_features": [
+    {
+      "name": "missing_features::0pct",
+      "macro_f1": 0.9993,
+      "accuracy": 0.9993,
+      "n_samples": 4211,
+      "mean_confidence": 9.7434,
+      "mask_ratio": 0.0
+    },
+    {
+      "name": "missing_features::10pct",
+      "macro_f1": 0.6018,
+      "accuracy": 0.593,
+      "n_samples": 4211,
+      "mean_confidence": 10.4962,
+      "mask_ratio": 0.1
+    },
+    {
+      "name": "missing_features::30pct",
+      "macro_f1": 0.4108,
+      "accuracy": 0.4011,
+      "n_samples": 4211,
+      "mean_confidence": 11.4947,
+      "mask_ratio": 0.3
+    },
+    {
+      "name": "missing_features::50pct",
+      "macro_f1": 0.2759,
+      "accuracy": 0.2676,
+      "n_samples": 4211,
+      "mean_confidence": 12.369,
+      "mask_ratio": 0.5
+    }
+  ],
+  "gaussian_noise": [
+    {
+      "name": "gaussian_noise::sigma0",
+      "macro_f1": 0.9993,
+      "accuracy": 0.9993,
+      "n_samples": 4211,
+      "mean_confidence": 9.7434,
+      "sigma_mult": 0.0
+    },
+    {
+      "name": "gaussian_noise::sigma0.05",
+      "macro_f1": 0.9995,
+      "accuracy": 0.9995,
+      "n_samples": 4211,
+      "mean_confidence": 9.6461,
+      "sigma_mult": 0.05
+    },
+    {
+      "name": "gaussian_noise::sigma0.1",
+      "macro_f1": 0.9982,
+      "accuracy": 0.9981,
+      "n_samples": 4211,
+      "mean_confidence": 9.2552,
+      "sigma_mult": 0.1
+    },
+    {
+      "name": "gaussian_noise::sigma0.2",
+      "macro_f1": 0.8518,
+      "accuracy": 0.796,
+      "n_samples": 4211,
+      "mean_confidence": 8.383,
+      "sigma_mult": 0.2
+    },
+    {
+      "name": "gaussian_noise::sigma0.5",
+      "macro_f1": 0.4766,
+      "accuracy": 0.4367,
+      "n_samples": 4211,
+      "mean_confidence": 10.504,
+      "sigma_mult": 0.5
+    }
+  ],
+  "scale_drift": [
+    {
+      "name": "scale_drift::factor0.8",
+      "macro_f1": 0.0507,
+      "accuracy": 0.1273,
+      "n_samples": 4211,
+      "mean_confidence": 16.2028,
+      "factor": 0.8
+    },
+    {
+      "name": "scale_drift::factor0.9",
+      "macro_f1": 0.1762,
+      "accuracy": 0.2384,
+      "n_samples": 4211,
+      "mean_confidence": 12.344,
+      "factor": 0.9
+    },
+    {
+      "name": "scale_drift::factor1",
+      "macro_f1": 0.9993,
+      "accuracy": 0.9993,
+      "n_samples": 4211,
+      "mean_confidence": 9.7434,
+      "factor": 1.0
+    },
+    {
+      "name": "scale_drift::factor1.1",
+      "macro_f1": 0.2631,
+      "accuracy": 0.294,
+      "n_samples": 4211,
+      "mean_confidence": 16.0752,
+      "factor": 1.1
+    },
+    {
+      "name": "scale_drift::factor1.2",
+      "macro_f1": 0.1445,
+      "accuracy": 0.1962,
+      "n_samples": 4211,
+      "mean_confidence": 28.2951,
+      "factor": 1.2
+    }
+  ],
+  "adversarial_fgsm": [
+    {
+      "name": "fgsm::eps0",
+      "macro_f1": 0.9993,
+      "accuracy": 0.9993,
+      "n_samples": 4211,
+      "mean_confidence": 9.7434,
+      "epsilon": 0.0
+    },
+    {
+      "name": "fgsm::eps0.01",
+      "macro_f1": 0.9986,
+      "accuracy": 0.9986,
+      "n_samples": 4211,
+      "mean_confidence": 9.2189,
+      "epsilon": 0.01
+    },
+    {
+      "name": "fgsm::eps0.02",
+      "macro_f1": 0.9959,
+      "accuracy": 0.9962,
+      "n_samples": 4211,
+      "mean_confidence": 8.6101,
+      "epsilon": 0.02
+    },
+    {
+      "name": "fgsm::eps0.05",
+      "macro_f1": 0.826,
+      "accuracy": 0.8207,
+      "n_samples": 4211,
+      "mean_confidence": 6.8357,
+      "epsilon": 0.05
+    },
+    {
+      "name": "fgsm::eps0.1",
+      "macro_f1": 0.4718,
+      "accuracy": 0.4258,
+      "n_samples": 4211,
+      "mean_confidence": 7.2912,
+      "epsilon": 0.1
+    }
+  ],
+  "ood_cross_system": {
+    "in_n": 4211,
+    "out_n": 3395,
+    "energy": {
+      "auroc": 0.4692,
+      "fpr_at_95_tpr": 0.6183,
+      "n_in": 4211,
+      "n_out": 3395,
+      "discriminability": 0.5308,
+      "direction": "inverted (out > in)"
+    },
+    "max_softmax": {
+      "auroc": 0.5995,
+      "fpr_at_95_tpr": 0.5228,
+      "n_in": 4211,
+      "n_out": 3395,
+      "discriminability": 0.5995,
+      "direction": "expected (in > out)"
+    }
+  },
+  "selective_prediction": {
+    "target_coverage": 0.95,
+    "energy_confidence_threshold": 7.5778,
+    "in_distribution_selective": {
+      "coverage": 0.9489,
+      "risk": 0.0,
+      "selective_accuracy": 1.0,
+      "n_accepted": 3996,
+      "n_total": 4211
+    },
+    "ood_reject_rate_at_threshold": 0.3826
+  },
+  "risk_coverage_curve": [
+    {
+      "threshold": 1.8486,
+      "coverage": 1.0,
+      "risk": 0.0007,
+      "n_accepted": 4211
+    },
+    {
+      "threshold": 7.5583,
+      "coverage": 0.9499,
+      "risk": 0.0,
+      "n_accepted": 4000
+    },
+    {
+      "threshold": 8.0194,
+      "coverage": 0.9,
+      "risk": 0.0,
+      "n_accepted": 3790
+    },
+    {
+      "threshold": 8.2937,
+      "coverage": 0.8499,
+      "risk": 0.0,
+      "n_accepted": 3579
+    },
+    {
+      "threshold": 8.4384,
+      "coverage": 0.8,
+      "risk": 0.0,
+      "n_accepted": 3369
+    },
+    {
+      "threshold": 8.5819,
+      "coverage": 0.7499,
+      "risk": 0.0,
+      "n_accepted": 3158
+    },
+    {
+      "threshold": 8.7607,
+      "coverage": 0.7001,
+      "risk": 0.0,
+      "n_accepted": 2948
+    },
+    {
+      "threshold": 8.9327,
+      "coverage": 0.65,
+      "risk": 0.0,
+      "n_accepted": 2737
+    },
+    {
+      "threshold": 9.0932,
+      "coverage": 0.6001,
+      "risk": 0.0,
+      "n_accepted": 2527
+    },
+    {
+      "threshold": 9.2596,
+      "coverage": 0.55,
+      "risk": 0.0,
+      "n_accepted": 2316
+    },
+    {
+      "threshold": 9.4341,
+      "coverage": 0.5001,
+      "risk": 0.0,
+      "n_accepted": 2106
+    },
+    {
+      "threshold": 9.6299,
+      "coverage": 0.45,
+      "risk": 0.0,
+      "n_accepted": 1895
+    },
+    {
+      "threshold": 9.8451,
+      "coverage": 0.4001,
+      "risk": 0.0,
+      "n_accepted": 1685
+    },
+    {
+      "threshold": 10.0502,
+      "coverage": 0.35,
+      "risk": 0.0,
+      "n_accepted": 1474
+    },
+    {
+      "threshold": 10.3023,
+      "coverage": 0.2999,
+      "risk": 0.0,
+      "n_accepted": 1263
+    },
+    {
+      "threshold": 10.5582,
+      "coverage": 0.2501,
+      "risk": 0.0,
+      "n_accepted": 1053
+    },
+    {
+      "threshold": 10.8758,
+      "coverage": 0.2002,
+      "risk": 0.0,
+      "n_accepted": 843
+    },
+    {
+      "threshold": 11.2034,
+      "coverage": 0.1501,
+      "risk": 0.0,
+      "n_accepted": 632
+    },
+    {
+      "threshold": 11.6778,
+      "coverage": 0.1002,
+      "risk": 0.0,
+      "n_accepted": 422
+    },
+    {
+      "threshold": 12.6595,
+      "coverage": 0.0501,
+      "risk": 0.0,
+      "n_accepted": 211
+    },
+    {
+      "threshold": 23.0104,
+      "coverage": 0.0002,
+      "risk": 0.0,
+      "n_accepted": 1
+    }
+  ]
+}

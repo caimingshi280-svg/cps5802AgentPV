@@ -1,0 +1,176 @@
+{
+  "system_type": "PV",
+  "variant": "onnx_int8",
+  "split": "test",
+  "model_path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_pv_int8.onnx",
+  "classification_report": {
+    "system_type": "PV",
+    "split": "test",
+    "n_samples": 4211,
+    "n_classes": 7,
+    "accuracy": 0.999525,
+    "macro_f1": 0.99952,
+    "weighted_f1": 0.999525,
+    "per_class": [
+      {
+        "label": "PV_Normal",
+        "label_id": 0,
+        "precision": 0.999152,
+        "recall": 1.0,
+        "f1": 0.999576,
+        "support": 1178
+      },
+      {
+        "label": "Partial_shading",
+        "label_id": 1,
+        "precision": 1.0,
+        "recall": 0.996132,
+        "f1": 0.998062,
+        "support": 517
+      },
+      {
+        "label": "Soiling",
+        "label_id": 2,
+        "precision": 0.998,
+        "recall": 1.0,
+        "f1": 0.998999,
+        "support": 499
+      },
+      {
+        "label": "Bypass_diode_fault",
+        "label_id": 3,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 510
+      },
+      {
+        "label": "String_disconnection",
+        "label_id": 4,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 506
+      },
+      {
+        "label": "Inverter_fault",
+        "label_id": 5,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 504
+      },
+      {
+        "label": "Degradation",
+        "label_id": 6,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 497
+      }
+    ]
+  },
+  "confusion_matrix": {
+    "labels": [
+      "PV_Normal",
+      "Partial_shading",
+      "Soiling",
+      "Bypass_diode_fault",
+      "String_disconnection",
+      "Inverter_fault",
+      "Degradation"
+    ],
+    "matrix": [
+      [
+        1178,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        515,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        499,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        510,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        506,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        504,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        497
+      ]
+    ]
+  },
+  "latency": {
+    "n_runs": 1000,
+    "n_warmup": 50,
+    "batch_size": 1,
+    "window_size": 60,
+    "in_channels": 8,
+    "mean_ms": 0.0627,
+    "p50_ms": 0.0575,
+    "p95_ms": 0.0816,
+    "p99_ms": 0.1,
+    "min_ms": 0.0476,
+    "max_ms": 0.2446,
+    "std_ms": 0.015,
+    "extra": {
+      "system_type": "PV",
+      "variant": "onnx_int8",
+      "model_path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_pv_int8.onnx"
+    }
+  },
+  "model_size": {
+    "path": "C:\\Users\\Mansycc\\Desktop\\omar\\quantization\\artifacts\\cnn1d_pv_int8.onnx",
+    "bytes": 61090,
+    "kib": 59.6582,
+    "mib": 0.0583,
+    "budget_mib": 50.0,
+    "within_budget": true
+  }
+}

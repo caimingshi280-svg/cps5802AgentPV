@@ -1,0 +1,54 @@
+{
+  "built_at_utc": "2026-05-13T06:53:00Z",
+  "purpose": "C2/C3 edge artefacts rebuilt on the full-scale assignment dataset (n_samples = 50500, ≥50k requirement satisfied).",
+  "dataset": {
+    "generator": "python -m simulation.generate_dataset",
+    "args": "--seed 42 --n-pv 28000 --n-bess 22500 --n-pv-normal 8000 --n-bess-normal 5000",
+    "n_samples_total": 50500,
+    "splits": {"train": 35126, "val": 7768, "test": 7606},
+    "version_file": "data/version.txt"
+  },
+  "training": {
+    "pv": {
+      "checkpoint": "quantization/artifacts/cnn1d_pv_best.pt",
+      "best_val_macro_f1": 0.9998
+    },
+    "bess": {
+      "checkpoint": "quantization/artifacts/cnn1d_bess_best.pt",
+      "best_val_macro_f1": 0.9973
+    }
+  },
+  "onnx": {
+    "pv_fp32": "quantization/artifacts/cnn1d_pv.onnx",
+    "pv_int8": "quantization/artifacts/cnn1d_pv_int8.onnx",
+    "bess_fp32": "quantization/artifacts/cnn1d_bess.onnx",
+    "bess_int8": "quantization/artifacts/cnn1d_bess_int8.onnx"
+  },
+  "c3_comparison_test_split": {
+    "pv": {
+      "pytorch_fp32": {"macro_f1": 0.9994, "p95_ms": 0.892, "size_mib": 0.184},
+      "onnx_fp32":    {"macro_f1": 0.9994, "p95_ms": 0.148, "size_mib": 0.176},
+      "onnx_int8":    {"macro_f1": 0.9994, "p95_ms": 0.101, "size_mib": 0.058}
+    },
+    "bess": {
+      "pytorch_fp32": {"macro_f1": 0.9980, "p95_ms": 1.028, "size_mib": 0.184},
+      "onnx_fp32":    {"macro_f1": 0.9980, "p95_ms": 0.146, "size_mib": 0.175},
+      "onnx_int8":    {"macro_f1": 0.7058, "p95_ms": 0.092, "size_mib": 0.058,
+                       "note": "Static INT8 PTQ on BESS shows the canonical accuracy/size tradeoff (-29.2pp Macro-F1) discussed under assignment §4.3 compression analysis."}
+    },
+    "thresholds": {
+      "macro_f1_target": 0.90,
+      "p95_latency_target_ms": 100,
+      "size_budget_mib": 50
+    },
+    "report_paths": {
+      "pv":   "reports/pv/comparison.md",
+      "bess": "reports/bess/comparison.md"
+    }
+  },
+  "next_commands": [
+    "uvicorn api.edge_service:app --host 127.0.0.1 --port 8000",
+    "uvicorn api.agent_service:app --host 127.0.0.1 --port 8001",
+    "python scripts/e2e_latency_bench.py --iterations 50"
+  ]
+}

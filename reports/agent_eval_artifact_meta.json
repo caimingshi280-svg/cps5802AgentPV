@@ -1,0 +1,63 @@
+{
+  "input_json": "agent_eval\\results\\last_run_three_ablations_with_judge.json",
+  "out_md": "C:\\Users\\Mansycc\\Desktop\\omar\\reports\\agent_eval.md",
+  "fig_dir": "C:\\Users\\Mansycc\\Desktop\\omar\\reports\\figures\\agent_eval",
+  "summary_by_ablation": {
+    "full": {
+      "n": 33,
+      "mean_score": 0.9318,
+      "median_score": 1.0,
+      "min_score": 0.75,
+      "max_score": 1.0,
+      "pct_perfect": 0.7273,
+      "pct_urgency_ok": 1.0,
+      "pct_keywords_ok": 0.7273,
+      "pct_forbidden_ok": 1.0,
+      "pct_knowledge_ok": 1.0,
+      "mean_tool_calls": 1.818,
+      "mean_reasoning_steps": 5.818,
+      "mean_kb_sources": 2.606,
+      "pct_with_kb": 0.9091
+    },
+    "no_retrieve_knowledge": {
+      "n": 33,
+      "mean_score": 0.9242,
+      "median_score": 1.0,
+      "min_score": 0.75,
+      "max_score": 1.0,
+      "pct_perfect": 0.697,
+      "pct_urgency_ok": 1.0,
+      "pct_keywords_ok": 0.697,
+      "pct_forbidden_ok": 1.0,
+      "pct_knowledge_ok": 1.0,
+      "mean_tool_calls": 1.061,
+      "mean_reasoning_steps": 5.818,
+      "mean_kb_sources": 0.0,
+      "pct_with_kb": 0.0
+    },
+    "no_reasoning_trace": {
+      "n": 33,
+      "mean_score": 0.9015,
+      "median_score": 1.0,
+      "min_score": 0.75,
+      "max_score": 1.0,
+      "pct_perfect": 0.6061,
+      "pct_urgency_ok": 1.0,
+      "pct_keywords_ok": 0.6061,
+      "pct_forbidden_ok": 1.0,
+      "pct_knowledge_ok": 1.0,
+      "mean_tool_calls": 0.0,
+      "mean_reasoning_steps": 1.0,
+      "mean_kb_sources": 2.667,
+      "pct_with_kb": 0.9091
+    }
+  },
+  "failure_counts": {
+    "full": 9,
+    "no_retrieve_knowledge": 10,
+    "no_reasoning_trace": 13
+  },
+  "telemetry": {
+    "log_present": false
+  }
+}

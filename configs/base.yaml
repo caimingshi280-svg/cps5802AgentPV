@@ -1,0 +1,13 @@
+# AgentPV base configuration.
+# Values here apply to every environment unless overridden by
+# dev.yaml / test.yaml / prod.yaml or AGENTPV_* environment variables.
+
+seed: 42
+batch_size: 256
+log_level: INFO
+log_format: json
+inference_latency_budget_ms: 100
+react_max_iterations: 5
+vector_backend: chromadb
+embedding_model: "BAAI/bge-small-en-v1.5"
+rerank_model: "BAAI/bge-reranker-base"

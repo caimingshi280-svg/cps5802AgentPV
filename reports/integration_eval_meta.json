@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-06-03T16:17:46Z",
+  "report": "reports/integration_eval.md",
+  "figures": {
+    "latency_bar": "reports/figures/integration/01_latency_bars.png",
+    "latency_violin": "reports/figures/integration/02_latency_violin.png",
+    "edge_agent_split": "reports/figures/integration/03_edge_vs_agent_split.png",
+    "node_fanout": "reports/figures/integration/04_node_fanout.png",
+    "severity_mix": "reports/figures/integration/05_severity_mix.png"
+  },
+  "latency_inputs": {
+    "edge_only": "reports/integration/e2e_latency_edge_only.json",
+    "full": "reports/integration/e2e_latency_full.json",
+    "cloud_only": "reports/integration/e2e_latency_cloud_only.json"
+  },
+  "events_path": "data/orchestrator/events.jsonl",
+  "events_summary": {
+    "n_events": 144,
+    "n_nodes": 10,
+    "by_severity": {
+      "monitor": 104,
+      "warning": 21,
+      "critical": 19
+    },
+    "by_fault_class": {
+      "BESS_Normal": 39,
+      "PV_Normal": 52,
+      "Cell_imbalance": 5,
+      "Internal_resistance_increase": 6,
+      "Partial_shading": 3,
+      "Soiling": 2,
+      "String_disconnection": 4,
+      "Capacity_fade": 13,
+      "Thermal_anomaly": 8,
+      "Inverter_fault": 7,
+      "Bypass_diode_fault": 4,
+      "Degradation": 1
+    }
+  },
+  "headline": {
+    "edge_only": {
+      "iterations": 50,
+      "p50_ms": 4.501100000197766,
+      "p95_ms": 5.688499999450869,
+      "meets_p95_budget_10s": true
+    },
+    "full": {
+      "iterations": 50,
+      "p50_ms": 8437.94059999982,
+      "p95_ms": 9802.81500000001,
+      "meets_p95_budget_10s": true
+    },
+    "cloud_only": {
+      "iterations": 50,
+      "p50_ms": 9163.041499999963,
+      "p95_ms": 9941.215799999554,
+      "meets_p95_budget_10s": true
+    }
+  }
+}

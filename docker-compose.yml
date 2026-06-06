@@ -1,0 +1,132 @@
+# AgentPV cloud-edge orchestration — MVP build.
+#
+# Five services per project rule §14:
+#   - edge-service  : ONNX-based edge classifier      (port 8000)
+#   - agent-service : RAG + ReAct LLM agent (mock)    (port 8001)
+#   - orchestrator  : multi-node simulation driver    (no port; emits JSONL)
+#   - dashboard     : Streamlit operator UI           (port 8501)
+#   - vector-db     : ChromaDB instance               (port 8002 → polish phase)
+#
+# `vector-db` is included for parity with the polish-phase architecture
+# (sentence-transformers + ChromaDB). The MVP agent uses TF-IDF in-memory
+# retrieval and does NOT depend on vector-db.
+#
+# Volumes:
+#   data/orchestrator/  is mounted RW into both `orchestrator` (writer) and
+#                       `dashboard` (reader) so the JSONL event stream is the
+#                       single source of truth (rule §3).
+#
+# Run:
+#   docker compose up --build
+#
+# Health endpoints (rule §22):
+#   curl http://localhost:8000/healthz   # edge
+#   curl http://localhost:8001/healthz   # agent
+#   curl http://localhost:8501/_stcore/health   # dashboard
+services:
+  vector-db:
+    image: chromadb/chroma:0.5.0
+    container_name: agentpv-vector-db
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./rag/knowledge_base/chroma_db:/chroma/chroma
+    restart: unless-stopped
+    profiles: ["polish"]   # MVP `docker compose up` skips this; only start with `--profile polish`.
+
+  edge-service:
+    build:
+      context: .
+      dockerfile: docker/edge.Dockerfile
+    image: agentpv/edge:0.1.0
+    container_name: agentpv-edge
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./quantization/artifacts:/app/quantization/artifacts:ro
+      - ./configs:/app/configs:ro
+    environment:
+      APP_ENV: prod
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+    restart: unless-stopped
+
+  agent-service:
+    build:
+      context: .
+      dockerfile: docker/agent.Dockerfile
+    image: agentpv/agent:0.1.0
+    container_name: agentpv-agent
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./rag/knowledge_base/documents:/app/rag/knowledge_base/documents:ro
+      - ./configs:/app/configs:ro
+    environment:
+      APP_ENV: prod
+      AGENTPV_KNOWLEDGE_BASE_DIR: /app/rag/knowledge_base/documents
+    depends_on:
+      edge-service:
+        condition: service_healthy
+    # Cold start loads sentence-transformers + Chroma; allow ~2 min before failing health.
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8001/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 120s
+    restart: unless-stopped
+
+  orchestrator:
+    build:
+      context: .
+      dockerfile: docker/orchestrator.Dockerfile
+    image: agentpv/orchestrator:0.1.0
+    container_name: agentpv-orchestrator
+    volumes:
+      - ./data/orchestrator:/app/data/orchestrator:rw
+    environment:
+      APP_ENV: prod
+    depends_on:
+      edge-service:
+        condition: service_healthy
+      agent-service:
+        condition: service_healthy
+    # Override default duration here if needed.
+    command: [
+      "python", "-m", "orchestrator",
+      "--edge", "http://edge-service:8000",
+      "--agent", "http://agent-service:8001",
+      "--nodes", "pv2_bess1",
+      "--duration", "60",
+      "--http-timeout", "120",
+      "--out", "/app/data/orchestrator/events.jsonl"
+    ]
+    restart: "no"
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/dashboard.Dockerfile
+    image: agentpv/dashboard:0.1.0
+    container_name: agentpv-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data/orchestrator:/app/data/orchestrator:ro
+    environment:
+      APP_ENV: prod
+    depends_on:
+      edge-service:
+        condition: service_healthy
+      agent-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8501/_stcore/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+    restart: unless-stopped

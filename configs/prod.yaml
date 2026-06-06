@@ -1,0 +1,6 @@
+# Production / demo overlay: structured logs, container-internal service URLs.
+log_level: INFO
+log_format: json
+edge_url: "http://edge-service:8000"
+agent_url: "http://agent-service:8001"
+vector_db_url: "http://vector-db:8000"

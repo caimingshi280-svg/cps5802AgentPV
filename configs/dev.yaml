@@ -1,0 +1,7 @@
+# Development overlay: noisy logs, services on localhost.
+log_level: DEBUG
+log_format: text
+llm_backend: ollama
+edge_url: "http://localhost:8000"
+agent_url: "http://localhost:8001"
+vector_db_url: "http://localhost:8002"

@@ -1,0 +1,8 @@
+# Top-level requirements file.
+# Aggregates every per-service requirements file so a fresh dev machine can
+# install the entire toolchain with a single `pip install -r requirements.txt`.
+-r requirements/base.txt
+-r requirements/ml.txt
+-r requirements/agent.txt
+-r requirements/dashboard.txt
+-r requirements/dev.txt

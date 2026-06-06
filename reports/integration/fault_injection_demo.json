@@ -1,0 +1,512 @@
+{
+  "generated_at": "2026-06-03T16:19:43+00:00",
+  "edge_url": "http://127.0.0.1:8000",
+  "agent_url": "http://127.0.0.1:8001",
+  "events_path": "data/orchestrator/events_c7_demo.jsonl",
+  "scenarios": [
+    {
+      "input": {
+        "label": "PV inverter fault (critical) \u2014 full pipeline",
+        "fault_class": "Inverter_fault",
+        "system_id": "DEMO-PV-INV-001",
+        "seed": 4242,
+        "skip_agent": false,
+        "system_type": "PV",
+        "operating_condition": "high_irradiance"
+      },
+      "summary": {
+        "event_id": "11e3126f943647fcbf945942f84dd5bd",
+        "system_id": "DEMO-PV-INV-001",
+        "ground_truth": "Inverter_fault",
+        "alert_severity": "critical",
+        "alert_fault_class": "Inverter_fault",
+        "alert_confidence": 1.0,
+        "recommendation_urgency": "immediate",
+        "recommendation_confidence": "medium",
+        "recommendation_action": "Run a partial shading test to identify the fault source. If the issue persists, perform an inverter ground fault detection response. If still present, inspect for bypass diode faults.",
+        "knowledge_source_count": 3,
+        "edge_ms": 26.15,
+        "agent_ms": 8653.2,
+        "agent_called": true,
+        "edge_error": null,
+        "agent_error": null,
+        "ok": true
+      }
+    },
+    {
+      "input": {
+        "label": "PV partial shading (warning) \u2014 full pipeline",
+        "fault_class": "Partial_shading",
+        "system_id": "DEMO-PV-SHADE-001",
+        "seed": 13,
+        "skip_agent": false,
+        "system_type": "PV",
+        "operating_condition": "high_irradiance"
+      },
+      "summary": {
+        "event_id": "6102c43fde234b77b0df33259d261915",
+        "system_id": "DEMO-PV-SHADE-001",
+        "ground_truth": "Partial_shading",
+        "alert_severity": "warning",
+        "alert_fault_class": "Partial_shading",
+        "alert_confidence": 0.9998,
+        "recommendation_urgency": "scheduled",
+        "recommendation_confidence": "medium",
+        "recommendation_action": "Check the inverter's MPPT envelope to ensure it is functioning correctly. Verify that the irradiance levels are within design point values. If issues persist, consider running a diagnostic test on the system.",
+        "knowledge_source_count": 3,
+        "edge_ms": 6.79,
+        "agent_ms": 8476.5,
+        "agent_called": true,
+        "edge_error": null,
+        "agent_error": null,
+        "ok": true
+      }
+    },
+    {
+      "input": {
+        "label": "BESS thermal anomaly (critical) \u2014 full pipeline",
+        "fault_class": "Thermal_anomaly",
+        "system_id": "DEMO-BESS-THERMAL-001",
+        "seed": 99,
+        "skip_agent": false,
+        "system_type": "BESS",
+        "operating_condition": "high_temperature"
+      },
+      "summary": {
+        "event_id": "116d603eab194fc984fa4e10044eae8c",
+        "system_id": "DEMO-BESS-THERMAL-001",
+        "ground_truth": "Thermal_anomaly",
+        "alert_severity": "critical",
+        "alert_fault_class": "Thermal_anomaly",
+        "alert_confidence": 0.9961,
+        "recommendation_urgency": "immediate",
+        "recommendation_confidence": "medium",
+        "recommendation_action": "Trigger immediate intervention for Thermal_anomaly fault in BESS system DEMO-BESS-THERMAL-001. Refer to 'BESS Thermal Anomaly \u2014 Containment First Steps' procedure for containment first steps. Escalate to operations team for further action.",
+        "knowledge_source_count": 3,
+        "edge_ms": 8.15,
+        "agent_ms": 8705.1,
+        "agent_called": true,
+        "edge_error": null,
+        "agent_error": null,
+        "ok": true
+      }
+    },
+    {
+      "input": {
+        "label": "PV normal \u2014 agent skipped (edge-only response)",
+        "fault_class": "PV_Normal",
+        "system_id": "DEMO-PV-NORMAL-001",
+        "seed": 7,
+        "skip_agent": false,
+        "system_type": "PV",
+        "operating_condition": "low_irradiance"
+      },
+      "summary": {
+        "event_id": "3e3a5bd688f64f2dbb3a8438bb18ed88",
+        "system_id": "DEMO-PV-NORMAL-001",
+        "ground_truth": "PV_Normal",
+        "alert_severity": "monitor",
+        "alert_fault_class": "PV_Normal",
+        "alert_confidence": 0.9986,
+        "recommendation_urgency": null,
+        "recommendation_confidence": null,
+        "recommendation_action": null,
+        "knowledge_source_count": 0,
+        "edge_ms": 6.53,
+        "agent_ms": null,
+        "agent_called": false,
+        "edge_error": null,
+        "agent_error": null,
+        "ok": true
+      }
+    },
+    {
+      "input": {
+        "label": "PV critical fault with skip_agent=True (graceful degradation)",
+        "fault_class": "String_disconnection",
+        "system_id": "DEMO-PV-DEGRADE-001",
+        "seed": 21,
+        "skip_agent": true,
+        "system_type": "PV",
+        "operating_condition": "high_irradiance"
+      },
+      "summary": {
+        "event_id": "d9bea5b2330f46b2af1f1c07644cd975",
+        "system_id": "DEMO-PV-DEGRADE-001",
+        "ground_truth": "String_disconnection",
+        "alert_severity": "critical",
+        "alert_fault_class": "String_disconnection",
+        "alert_confidence": 0.9999,
+        "recommendation_urgency": null,
+        "recommendation_confidence": null,
+        "recommendation_action": null,
+        "knowledge_source_count": 0,
+        "edge_ms": 11.31,
+        "agent_ms": null,
+        "agent_called": false,
+        "edge_error": null,
+        "agent_error": null,
+        "ok": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "event_id": "11e3126f943647fcbf945942f84dd5bd",
+      "timestamp": "2026-06-03T16:19:24.778670Z",
+      "node_id": "demo-injector",
+      "system_id": "DEMO-PV-INV-001",
+      "system_type": "PV",
+      "step_number": 0,
+      "ground_truth_label": "Inverter_fault",
+      "alert": {
+        "timestamp": "2026-06-03T16:19:15.666383Z",
+        "system_id": "DEMO-PV-INV-001",
+        "system_type": "PV",
+        "fault_class": "Inverter_fault",
+        "severity": "critical",
+        "confidence": 0.9999670458420534,
+        "sensor_snapshot": {
+          "V_dc": 29.69415855407715,
+          "I_dc": 8.814929008483887,
+          "P": 261.75189208984375,
+          "T_module": 52.35122299194336,
+          "T_amb": 22.538787841796875,
+          "G": 993.7479248046875,
+          "P_ac": 289.7135925292969,
+          "eta": 0.18221017718315125
+        }
+      },
+      "recommendation": {
+        "recommended_action": "Run a partial shading test to identify the fault source. If the issue persists, perform an inverter ground fault detection response. If still present, inspect for bypass diode faults.",
+        "urgency": "immediate",
+        "reasoning_trace": [
+          {
+            "step": 0,
+            "phase": "observe",
+            "thought": "Received critical alert for DEMO-PV-INV-001 (PV): Inverter_fault, confidence=1.00",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 1,
+            "phase": "reason",
+            "thought": "Tool plan (1): retrieve_knowledge",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 2,
+            "phase": "act",
+            "thought": "Executing retrieve_knowledge.",
+            "action": "retrieve_knowledge",
+            "args": {
+              "query": "SELECT * FROM knowledge WHERE system_id = 'DEMO-PV-INV-001' AND system_type = 'PV' AND fault_class = 'Inverter_fault' AND severity = 'critical' AND confidence > 0.99"
+            },
+            "result_summary": "retrieved 3 doc(s) from 3 unique title(s)"
+          },
+          {
+            "step": 3,
+            "phase": "reflect",
+            "thought": "Gathered 1 tool result(s); errors: 0.",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 4,
+            "phase": "report",
+            "thought": "Final recommendation drafted (medium confidence, immediate urgency, 3 citation(s)).",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          }
+        ],
+        "knowledge_sources": [
+          "Partial Shading \u2014 Operator Playbook (PLACEHOLDER)",
+          "Inverter Ground Fault Detection Response",
+          "Bypass Diode Fault Signatures"
+        ],
+        "confidence": "medium"
+      },
+      "error": null,
+      "edge_elapsed_ms": 26.1475999996037,
+      "agent_elapsed_ms": 8653.196399998706
+    },
+    {
+      "event_id": "6102c43fde234b77b0df33259d261915",
+      "timestamp": "2026-06-03T16:19:33.611529Z",
+      "node_id": "demo-injector",
+      "system_id": "DEMO-PV-SHADE-001",
+      "system_type": "PV",
+      "step_number": 0,
+      "ground_truth_label": "Partial_shading",
+      "alert": {
+        "timestamp": "2026-06-03T16:19:24.781680Z",
+        "system_id": "DEMO-PV-SHADE-001",
+        "system_type": "PV",
+        "fault_class": "Partial_shading",
+        "severity": "warning",
+        "confidence": 0.999759346149838,
+        "sensor_snapshot": {
+          "V_dc": 27.385379791259766,
+          "I_dc": 3.556328296661377,
+          "P": 97.39140319824219,
+          "T_module": 63.200897216796875,
+          "T_amb": 26.70716667175293,
+          "G": 1129.05615234375,
+          "P_ac": 93.24341583251953,
+          "eta": 0.1457739919424057
+        }
+      },
+      "recommendation": {
+        "recommended_action": "Check the inverter's MPPT envelope to ensure it is functioning correctly. Verify that the irradiance levels are within design point values. If issues persist, consider running a diagnostic test on the system.",
+        "urgency": "scheduled",
+        "reasoning_trace": [
+          {
+            "step": 0,
+            "phase": "observe",
+            "thought": "Received warning alert for DEMO-PV-SHADE-001 (PV): Partial_shading, confidence=1.00",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 1,
+            "phase": "reason",
+            "thought": "Tool plan (1): retrieve_knowledge",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 2,
+            "phase": "act",
+            "thought": "Executing retrieve_knowledge.",
+            "action": "retrieve_knowledge",
+            "args": {
+              "query": "\"DEMO-PV-SHADE-001\"",
+              "top_k": 3
+            },
+            "result_summary": "retrieved 3 doc(s) from 3 unique title(s)"
+          },
+          {
+            "step": 3,
+            "phase": "reflect",
+            "thought": "Gathered 1 tool result(s); errors: 0.",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 4,
+            "phase": "report",
+            "thought": "Final recommendation drafted (medium confidence, scheduled urgency, 3 citation(s)).",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          }
+        ],
+        "knowledge_sources": [
+          "General Safety & Escalation Procedures (PLACEHOLDER)",
+          "Partial Shading \u2014 Operator Playbook (PLACEHOLDER)",
+          "PV Degradation Rate \u2014 Tracking and Thresholds"
+        ],
+        "confidence": "medium"
+      },
+      "error": null,
+      "edge_elapsed_ms": 6.787899999835645,
+      "agent_elapsed_ms": 8476.5006000016
+    },
+    {
+      "event_id": "116d603eab194fc984fa4e10044eae8c",
+      "timestamp": "2026-06-03T16:19:42.679072Z",
+      "node_id": "demo-injector",
+      "system_id": "DEMO-BESS-THERMAL-001",
+      "system_type": "BESS",
+      "step_number": 0,
+      "ground_truth_label": "Thermal_anomaly",
+      "alert": {
+        "timestamp": "2026-06-03T16:19:33.614538Z",
+        "system_id": "DEMO-BESS-THERMAL-001",
+        "system_type": "BESS",
+        "fault_class": "Thermal_anomaly",
+        "severity": "critical",
+        "confidence": 0.9960886744870758,
+        "sensor_snapshot": {
+          "V_term": 3.4324002265930176,
+          "I": 13.282464027404785,
+          "SOC": 0.5573751926422119,
+          "T": 43.07331848144531,
+          "R_est": 0.017796996980905533,
+          "sigma_V": 0.00565067445859313,
+          "N_cycle": 953.68798828125,
+          "SoH": 0.8119528293609619
+        }
+      },
+      "recommendation": {
+        "recommended_action": "Trigger immediate intervention for Thermal_anomaly fault in BESS system DEMO-BESS-THERMAL-001. Refer to 'BESS Thermal Anomaly \u2014 Containment First Steps' procedure for containment first steps. Escalate to operations team for further action.",
+        "urgency": "immediate",
+        "reasoning_trace": [
+          {
+            "step": 0,
+            "phase": "observe",
+            "thought": "Received critical alert for DEMO-BESS-THERMAL-001 (BESS): Thermal_anomaly, confidence=1.00",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 1,
+            "phase": "reason",
+            "thought": "Tool plan (4): retrieve_knowledge, system_history, estimate_rul, escalate_alert",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 2,
+            "phase": "act",
+            "thought": "Executing retrieve_knowledge.",
+            "action": "retrieve_knowledge",
+            "args": {
+              "query": "Thermal_anomaly mitigation procedure BESS",
+              "top_k": 3
+            },
+            "result_summary": "retrieved 3 doc(s) from 3 unique title(s)"
+          },
+          {
+            "step": 3,
+            "phase": "act",
+            "thought": "Executing system_history.",
+            "action": "system_history",
+            "args": {
+              "system_id": "DEMO-BESS-THERMAL-001",
+              "system_type": "BESS",
+              "hours": 24
+            },
+            "result_summary": "backend=mock, warnings=2, critical=0"
+          },
+          {
+            "step": 4,
+            "phase": "act",
+            "thought": "Executing estimate_rul.",
+            "action": "estimate_rul",
+            "args": {
+              "system_id": "DEMO-BESS-THERMAL-001",
+              "system_type": "BESS",
+              "fault_class": "Thermal_anomaly",
+              "severity": "critical",
+              "confidence": 0.9960886744870758
+            },
+            "result_summary": "rul_days=0 (0\u20131); immediate=True"
+          },
+          {
+            "step": 5,
+            "phase": "act",
+            "thought": "Executing escalate_alert.",
+            "action": "escalate_alert",
+            "args": {
+              "system_id": "DEMO-BESS-THERMAL-001",
+              "system_type": "BESS",
+              "fault_class": "Thermal_anomaly",
+              "severity": "critical",
+              "urgency": "immediate",
+              "summary": "Thermal_anomaly (critical) on DEMO-BESS-THERMAL-001, confidence=1.00"
+            },
+            "result_summary": "escalated=True, id=9fdaa04c4f67479ea853261bcf562087"
+          },
+          {
+            "step": 6,
+            "phase": "reflect",
+            "thought": "Gathered 4 tool result(s); errors: 0.",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          },
+          {
+            "step": 7,
+            "phase": "report",
+            "thought": "Final recommendation drafted (medium confidence, immediate urgency, 3 citation(s)).",
+            "action": null,
+            "args": null,
+            "result_summary": null
+          }
+        ],
+        "knowledge_sources": [
+          "BESS Thermal Anomaly \u2014 Containment First Steps",
+          "BESS Capacity Fade \u2014 Operator Playbook (PLACEHOLDER)",
+          "BESS Normal Operations \u2014 Balancing and Limits"
+        ],
+        "confidence": "medium"
+      },
+      "error": null,
+      "edge_elapsed_ms": 8.147900000039954,
+      "agent_elapsed_ms": 8705.097300000489
+    },
+    {
+      "event_id": "3e3a5bd688f64f2dbb3a8438bb18ed88",
+      "timestamp": "2026-06-03T16:19:43.026517Z",
+      "node_id": "demo-injector",
+      "system_id": "DEMO-PV-NORMAL-001",
+      "system_type": "PV",
+      "step_number": 0,
+      "ground_truth_label": "PV_Normal",
+      "alert": {
+        "timestamp": "2026-06-03T16:19:42.681075Z",
+        "system_id": "DEMO-PV-NORMAL-001",
+        "system_type": "PV",
+        "fault_class": "PV_Normal",
+        "severity": "monitor",
+        "confidence": 0.9985879715161229,
+        "sensor_snapshot": {
+          "V_dc": 38.07124710083008,
+          "I_dc": 2.123835563659668,
+          "P": 80.85706329345703,
+          "T_module": 25.13410758972168,
+          "T_amb": 17.96946144104004,
+          "G": 238.82151794433594,
+          "P_ac": 77.04507446289062,
+          "eta": 0.20162828266620636
+        }
+      },
+      "recommendation": null,
+      "error": null,
+      "edge_elapsed_ms": 6.530700000439538,
+      "agent_elapsed_ms": null
+    },
+    {
+      "event_id": "d9bea5b2330f46b2af1f1c07644cd975",
+      "timestamp": "2026-06-03T16:19:43.386643Z",
+      "node_id": "demo-injector",
+      "system_id": "DEMO-PV-DEGRADE-001",
+      "system_type": "PV",
+      "step_number": 0,
+      "ground_truth_label": "String_disconnection",
+      "alert": {
+        "timestamp": "2026-06-03T16:19:43.028097Z",
+        "system_id": "DEMO-PV-DEGRADE-001",
+        "system_type": "PV",
+        "fault_class": "String_disconnection",
+        "severity": "critical",
+        "confidence": 0.9999439947568124,
+        "sensor_snapshot": {
+          "V_dc": 30.51541519165039,
+          "I_dc": 0.0,
+          "P": 0.0,
+          "T_module": 54.11773681640625,
+          "T_amb": 24.985624313354492,
+          "G": 971.0704345703125,
+          "P_ac": 0.0,
+          "eta": 0.15543940663337708
+        }
+      },
+      "recommendation": null,
+      "error": null,
+      "edge_elapsed_ms": 11.314899998978944,
+      "agent_elapsed_ms": null
+    }
+  ]
+}

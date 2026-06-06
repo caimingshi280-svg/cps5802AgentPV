@@ -1,0 +1,11 @@
+# Test overlay: deterministic, quiet, tiny batches.
+rag_retrieval: tfidf
+llm_backend: mock
+seed: 0
+batch_size: 16
+log_level: WARNING
+log_format: text
+react_max_iterations: 2
+edge_url: "http://localhost:8000"
+agent_url: "http://localhost:8001"
+vector_db_url: "http://localhost:8002"

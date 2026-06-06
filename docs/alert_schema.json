@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentpv.local/schemas/alert.schema.json",
+  "title": "AgentPV Edge-to-Cloud Alert",
+  "description": "Fixed alert contract emitted by the edge module and consumed by the cloud agent.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "timestamp",
+    "system_id",
+    "system_type",
+    "fault_class",
+    "severity",
+    "confidence",
+    "sensor_snapshot"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp."
+    },
+    "system_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "system_type": {
+      "type": "string",
+      "enum": ["PV", "BESS"]
+    },
+    "fault_class": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Predicted fault label emitted by the edge classifier."
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["monitor", "warning", "critical"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "sensor_snapshot": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null"]
+      },
+      "description": "Key sensor readings at alert time."
+    }
+  },
+  "examples": [
+    {
+      "timestamp": "2026-03-15T14:23:00Z",
+      "system_id": "PV_003",
+      "system_type": "PV",
+      "fault_class": "Partial_shading",
+      "severity": "warning",
+      "confidence": 0.91,
+      "sensor_snapshot": {
+        "V_dc": 520.1,
+        "I_dc": 4.2,
+        "P_ac": 1870.5,
+        "irradiance": 920.0,
+        "module_temperature": 43.6
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+# Dependencies for simulation, models, training, inference, evaluation,
+# quantization. Pinned incrementally per project rule §23 — packages are
+# added here only when the corresponding component begins implementation.
+-r base.txt
+
+# Component 1 (data generation) — installed.
+numpy==2.3.5
+pandas==2.3.3
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
+tzdata==2025.2
+
+# Component 2 (model build) — installed.
+# torch CPU-only wheel: install with
+#   pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu
+# We pin without the +cpu local segment so the requirements file is
+# index-agnostic; reproducible installation requires --index-url above.
+torch==2.11.0
+filelock==3.25.2
+fsspec==2026.2.0
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+mpmath==1.3.0
+networkx==3.6.1
+sympy==1.14.0
+
+# Component 3 (model evaluation) — installed.
+scikit-learn==1.8.0
+scipy==1.17.1
+joblib==1.5.3
+threadpoolctl==3.6.0
+
+# Component 2+ (ONNX export & runtime) — installed.
+onnx==1.21.0
+onnxruntime==1.26.0
+protobuf==7.34.1
+flatbuffers==25.12.19
+
+# Component 3 (model evaluation visualisation) — installed.
+matplotlib==3.10.9
+pillow==12.2.0
+contourpy==1.3.3
+cycler==0.12.1
+fonttools==4.62.1
+kiwisolver==1.5.0
+pyparsing==3.2.5
+
+# Component 2/8 — INT8 static post-training quantization is provided by the
+# `onnxruntime.quantization` submodule (already pinned at onnxruntime==1.26.0
+# above) and does not require any additional packages.
+# Polish-phase placeholders (pin when introduced):
+#   torch.nn.utils.prune  (structured pruning — already in torch==2.11.0)
+#   pvlib                 (optional; only if we replace the custom PV simulator)

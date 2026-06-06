@@ -1,0 +1,46 @@
+{
+  "system_type": "PV",
+  "split": "test",
+  "baseline_variant": "pytorch_fp32",
+  "rows": [
+    {
+      "variant": "pytorch_fp32",
+      "macro_f1": 0.99932,
+      "accuracy": 0.999288,
+      "weighted_f1": 0.999287,
+      "p50_ms": 0.5593,
+      "p95_ms": 1.0141,
+      "p99_ms": 3.2889,
+      "size_kib": 188.4473,
+      "size_mib": 0.184,
+      "n_samples": 4211,
+      "summary_path": "C:\\Users\\Mansycc\\Desktop\\omar\\reports\\pv\\pytorch_fp32\\summary.json"
+    },
+    {
+      "variant": "onnx_fp32",
+      "macro_f1": 0.99932,
+      "accuracy": 0.999288,
+      "weighted_f1": 0.999287,
+      "p50_ms": 0.1096,
+      "p95_ms": 0.1315,
+      "p99_ms": 0.1451,
+      "size_kib": 179.8535,
+      "size_mib": 0.1756,
+      "n_samples": 4211,
+      "summary_path": "C:\\Users\\Mansycc\\Desktop\\omar\\reports\\pv\\onnx_fp32\\summary.json"
+    },
+    {
+      "variant": "onnx_int8",
+      "macro_f1": 0.99952,
+      "accuracy": 0.999525,
+      "weighted_f1": 0.999525,
+      "p50_ms": 0.0575,
+      "p95_ms": 0.0816,
+      "p99_ms": 0.1,
+      "size_kib": 59.6582,
+      "size_mib": 0.0583,
+      "n_samples": 4211,
+      "summary_path": "C:\\Users\\Mansycc\\Desktop\\omar\\reports\\pv\\onnx_int8\\summary.json"
+    }
+  ]
+}

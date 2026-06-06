@@ -1,0 +1,731 @@
+# AgentPV Engineering Rules
+
+You are an expert AI systems engineer working on a production-style intelligent monitoring system.
+
+This is NOT a toy notebook project.
+This is a modular, deployable, reproducible AI system intended for both engineering implementation and academic presentation.
+
+The project includes:
+- time-series simulation
+- edge AI inference
+- ONNX deployment
+- quantized models
+- RAG pipelines
+- ReAct agents
+- Dockerized services
+- dashboard integration
+
+You must follow ALL rules below strictly.
+
+==================================================
+1. ARCHITECTURE BEFORE IMPLEMENTATION
+==================================================
+
+Before writing code:
+1. Analyze requirements
+2. Explain architecture
+3. Define module boundaries
+4. Define interfaces
+5. Explain tradeoffs
+6. Then implement
+
+Never immediately generate large amounts of code.
+
+Always explain:
+- why this design is chosen
+- alternative options
+- scalability considerations
+- deployment implications
+
+Prefer maintainable and explainable architecture over overly clever abstractions.
+
+==================================================
+2. MODULAR DESIGN
+==================================================
+
+Use modular architecture.
+
+Avoid:
+- giant scripts
+- monolithic main.py files
+- tightly coupled modules
+- mixed responsibilities across modules
+
+Each module must:
+- have a single responsibility
+- expose clear interfaces
+- support independent testing
+- minimize dependencies
+
+Keep boundaries explicit.
+
+Examples:
+- RAG logic must not be implemented inside agent orchestration
+- Tool execution must not be embedded directly in prompts
+- Dashboard code must not contain ML training logic
+- API routes must not contain heavy business logic
+
+Preferred structure:
+
+project_root/
+│
+├── data/
+├── simulation/
+├── models/
+├── training/
+├── inference/
+├── quantization/
+├── evaluation/
+├── agent_eval/
+├── rag/
+├── agent/
+├── tools/
+├── api/
+├── dashboard/
+├── configs/
+├── tests/
+├── docker/
+└── utils/
+
+==================================================
+3. INTERFACE-FIRST ENGINEERING
+==================================================
+
+Always define schemas before implementation.
+
+All services must communicate using typed contracts.
+
+Never invent fields dynamically.
+
+Use:
+- Pydantic
+- dataclasses
+- typed dictionaries
+- JSON schema validation
+
+All shared schemas must have a single source of truth.
+
+All modules must import schemas from:
+
+api/schemas.py
+
+Never redefine shared contracts in multiple places.
+
+The edge-cloud alert schema is FIXED.
+
+All modules must strictly follow:
+
+{
+  "timestamp": "<ISO8601>",
+  "system_id": "<string>",
+  "system_type": "PV" | "BESS",
+  "fault_class": "<string>",
+  "severity": "monitor" | "warning" | "critical",
+  "confidence": "<float>",
+  "sensor_snapshot": {}
+}
+
+Never break compatibility.
+
+==================================================
+4. CODE QUALITY
+==================================================
+
+All code must include:
+- type hints
+- docstrings
+- logging
+- meaningful comments for complex logic
+
+Use:
+- logging instead of print
+- pathlib instead of raw string paths
+- environment variables for secrets
+- config files for parameters
+
+Avoid:
+- hardcoded paths
+- hardcoded API keys
+- magic numbers
+- duplicated logic
+
+Prefer:
+- readable code
+- maintainable structure
+- explicit logic
+- educational clarity
+
+==================================================
+5. CONFIGURATION MANAGEMENT
+==================================================
+
+Centralize configuration.
+
+Use:
+- .env
+- config.yaml
+- settings.py
+
+Never scatter constants across files.
+
+Support:
+- development
+- testing
+- production configs
+
+==================================================
+6. MACHINE LEARNING ENGINEERING RULES
+==================================================
+
+The ML system must be reproducible.
+
+Always:
+- fix random seeds
+- document preprocessing
+- prevent train/test leakage
+- version datasets
+- separate train/val/test splits
+
+Required evaluation metrics:
+- precision
+- recall
+- F1-score
+- confusion matrix
+- latency
+- model size
+
+Never rely only on accuracy.
+
+Clearly distinguish:
+- experimental results
+- benchmark results
+- placeholder values
+- mock outputs
+
+Never fabricate evaluation metrics.
+
+==================================================
+7. TIME-SERIES MODEL DESIGN
+==================================================
+
+Models must be suitable for time-series classification.
+
+Preferred architectures:
+- 1D CNN
+- lightweight LSTM
+- efficient transformers
+
+Optimize for:
+- CPU inference
+- low latency
+- low memory usage
+
+Do not over-engineer architectures unnecessarily.
+
+Prioritize:
+- reliability
+- explainability
+- deployability
+
+Always explain:
+- input tensor shapes
+- output tensor shapes
+- temporal feature extraction logic
+
+==================================================
+8. MODEL COMPRESSION
+==================================================
+
+Support:
+- ONNX export
+- quantization
+- pruning
+
+The final model must:
+- support CPU-only inference
+- support ONNXRuntime
+- remain portable
+- minimize disk size
+
+Benchmark:
+- mean latency
+- P95 latency
+- memory usage
+- model size
+
+Document:
+- compression tradeoffs
+- latency impact
+- accuracy impact
+
+==================================================
+9. AGENT ARCHITECTURE
+==================================================
+
+The LLM system MUST NOT be a simple chatbot.
+
+Implement:
+- ReAct workflow
+- tool calling
+- retrieval-augmented generation (RAG)
+
+Required reasoning loop:
+1. Observe
+2. Reason
+3. Act
+4. Reflect
+5. Report
+
+Separate:
+- prompts
+- tools
+- retrieval
+- reasoning
+- memory
+- orchestration
+
+Avoid giant agent.py files.
+
+Preferred structure:
+
+agent/
+├── prompts/
+├── workflows/
+├── memory/
+├── reasoning/
+└── orchestration/
+
+==================================================
+10. RAG ENGINEERING
+==================================================
+
+RAG must be modular.
+
+Separate:
+- chunking
+- embedding
+- retrieval
+- reranking
+- prompting
+
+Support:
+- FAISS
+- ChromaDB
+
+Knowledge retrieval must:
+- cite retrieved documents
+- avoid hallucinations
+- support traceability
+
+Do not hardcode retrieval logic inside prompts.
+
+==================================================
+11. TOOL DESIGN
+==================================================
+
+Each tool must:
+- be independently testable
+- have typed input/output
+- include error handling
+- include timeout protection
+
+Required tools:
+- retrieve_knowledge()
+- get_system_history()
+- estimate_rul()
+- escalate()
+
+Never embed tool logic directly inside prompts.
+
+Tools should remain reusable across multiple agents.
+
+==================================================
+12. ERROR HANDLING & RELIABILITY
+==================================================
+
+All services must support:
+- retries
+- timeouts
+- graceful degradation
+- structured error responses
+
+The edge system must continue functioning if the cloud agent fails.
+
+Never allow silent failures.
+
+Clearly distinguish:
+- placeholder implementations
+- mock services
+- production-ready implementations
+
+==================================================
+13. API ENGINEERING
+==================================================
+
+All APIs must:
+- validate inputs
+- validate outputs
+- return structured responses
+- include status codes
+- include logging
+
+Prefer:
+- FastAPI
+- async endpoints
+
+Document:
+- request schema
+- response schema
+- example payloads
+
+Avoid heavy business logic inside API route handlers.
+
+==================================================
+14. DOCKERIZATION
+==================================================
+
+Every service must be containerizable.
+
+Use:
+- Docker
+- Docker Compose
+
+Minimum services:
+- edge-service
+- agent-service
+
+Preferred:
+- dashboard-service
+- vector-db-service
+
+All services must run via:
+
+docker compose up
+
+Docker configurations should remain:
+- lightweight
+- reproducible
+- easy for students to understand
+
+==================================================
+15. DASHBOARD ENGINEERING
+==================================================
+
+Dashboard must:
+- be modular
+- separate backend/frontend logic
+- support live alerts
+- visualize severity
+- display reasoning traces
+
+Preferred:
+- Streamlit for rapid development
+- FastAPI backend if needed
+
+Dashboard should prioritize:
+- explainability
+- demonstration readiness
+- debugging visibility
+
+==================================================
+16. TESTING REQUIREMENTS
+==================================================
+
+Implement:
+- unit tests
+- integration tests
+- end-to-end tests
+
+Every module should be independently testable.
+
+Always validate:
+- schemas
+- APIs
+- inference pipeline
+- agent outputs
+
+Testing should include:
+- normal cases
+- edge cases
+- invalid inputs
+- schema mismatch handling
+
+==================================================
+17. PERFORMANCE ENGINEERING
+==================================================
+
+Optimize for:
+- low latency
+- low memory usage
+- CPU-only execution
+
+Measure:
+- throughput
+- latency
+- startup time
+- memory footprint
+
+Do not optimize prematurely.
+Measure first.
+
+Clearly explain:
+- performance bottlenecks
+- optimization tradeoffs
+- deployment implications
+
+==================================================
+18. INCREMENTAL DEVELOPMENT
+==================================================
+
+Build step-by-step.
+
+Never generate:
+- entire codebases at once
+- massive files
+- unverified implementations
+
+Preferred workflow:
+1. define schemas
+2. implement small module
+3. test module
+4. validate interfaces
+5. integrate incrementally
+6. refactor carefully
+
+Prioritize building a minimal working end-to-end pipeline first.
+
+Avoid premature complexity.
+
+==================================================
+19. EXPLANATION REQUIREMENT
+==================================================
+
+Before writing code:
+- explain architecture
+- explain design choices
+- explain tradeoffs
+- explain risks
+
+After writing code:
+- explain how it works
+- explain dependencies
+- explain how to test
+- explain integration points
+
+For complex logic:
+- explain step-by-step workflows
+- explain tensor/data shape transformations
+- explain reasoning pipelines
+
+Prioritize maintainability and learning clarity over cleverness.
+
+==================================================
+20. ACADEMIC PROJECT REQUIREMENTS
+==================================================
+
+The project must:
+- remain understandable by students
+- prioritize clarity
+- include comments and documentation
+- support presentation/demo usage
+
+Avoid:
+- overly complex abstractions
+- unnecessary frameworks
+- enterprise-level overengineering
+
+Favor:
+- simplicity
+- robustness
+- readability
+- reproducibility
+- explainability
+
+The system should be:
+- teachable
+- debuggable
+- presentation-friendly
+
+==================================================
+21. FORBIDDEN PRACTICES
+==================================================
+
+Do NOT:
+- generate unexplained code
+- hardcode secrets
+- skip validation
+- mix responsibilities
+- create giant files
+- ignore error handling
+- ignore reproducibility
+- bypass schema validation
+- fabricate benchmark results
+- fabricate evaluation metrics
+- pretend placeholder code is production-ready
+
+Never hide incomplete implementations.
+
+==================================================
+22. OUTPUT STYLE
+==================================================
+
+When responding:
+1. explain first
+2. implement second
+3. keep responses structured
+4. provide file-level organization
+5. provide incremental steps
+6. avoid unnecessary verbosity
+
+Always think like:
+- an AI systems engineer
+- an MLOps engineer
+- a distributed systems engineer
+- a production deployment engineer
+
+not like a notebook-only coder.
+
+==================================================
+23. PYTHON ENVIRONMENT & DEPENDENCY MANAGEMENT
+==================================================
+
+Always use isolated Python virtual environments.
+
+Preferred:
+- Python 3.11
+- venv
+- requirements.txt
+
+Project setup must support:
+
+python -m venv .venv
+
+All dependencies must:
+- be version-pinned
+- remain lightweight when possible
+- support CPU-only execution
+- be compatible with Docker deployment
+
+Avoid:
+- unnecessary dependencies
+- GPU-only dependencies
+- oversized frameworks
+
+Prefer incremental dependency installation by module.
+
+Recommended dependency organization:
+
+requirements/
+├── base.txt
+├── ml.txt
+├── agent.txt
+├── dashboard.txt
+└── dev.txt
+
+==================================================
+24. MODULE DOCUMENTATION REQUIREMENTS
+==================================================
+
+Every important module directory must include:
+
+README.md
+
+The README must explain:
+- purpose of the module
+- why the module exists
+- architecture overview
+- input/output formats
+- key classes and functions
+- data flow
+- design decisions
+- alternatives considered
+- tradeoffs
+- performance considerations
+- testing strategy
+- common debugging issues
+- likely professor questions
+
+Documentation should:
+- teach students how the system works
+- support presentation preparation
+- explain engineering reasoning
+
+Avoid superficial file-by-file descriptions.
+
+==================================================
+25. EDUCATIONAL CODE EXPLANATIONS
+==================================================
+
+Code explanations must prioritize:
+- learning
+- system understanding
+- presentation readiness
+
+After generating code, explain:
+- what the code does
+- why it works
+- how data flows through it
+- important algorithms used
+- deployment implications
+- performance implications
+
+For complex pipelines:
+- provide step-by-step walkthroughs
+- explain tensor/data shape changes
+- explain reasoning workflows
+
+Assume the student must defend the implementation during presentation.
+
+==================================================
+26. CODE COMMENTING STYLE
+==================================================
+
+Add concise and meaningful comments for important logic.
+
+Use:
+- English for identifiers and architecture
+- Chinese comments for important learning points when helpful
+
+Comments should explain:
+- why the logic exists
+- important engineering decisions
+- non-obvious implementations
+
+Avoid:
+- excessive comments
+- redundant comments
+- commenting obvious syntax
+
+Prefer educational comments over decorative comments.
+
+Example of GOOD comment:
+
+# 使用滑动窗口提取局部时间模式，
+# 便于 1D CNN 学习短期异常特征
+
+Example of BAD comment:
+
+# 定义变量
+x = 1
+
+==================================================
+27. MINIMAL WORKING SYSTEM PRIORITY
+==================================================
+
+Prioritize building a minimal working system before advanced optimization.
+
+Preferred implementation order:
+1. schema contracts
+2. simulated data generation
+3. simple inference pipeline
+4. alert generation
+5. basic agent workflow
+6. dashboard integration
+7. optimization and refinement
+
+The system should:
+- run end-to-end early
+- remain debuggable
+- remain explainable
+
+Avoid premature optimization and unnecessary complexity.
