@@ -1,11 +1,9 @@
 # Model evaluation (overview) — Deliverable #4
 
 > **🎓 Final academic report (Deliverable §3)** is in
-> [`reports/final_report.md`](final_report.md) (Markdown source) and
-> [`reports/final_report.pdf`](final_report.pdf) (24-page PDF, A4, ~2.3 MB).
-> Build with `python scripts/render_final_report.py` (mistune → HTML → Chrome
-> headless `--print-to-pdf`). This `model_eval.md` is the *index* document
-> that the final PDF synthesises from.
+> [`reports/final_report.md`](final_report.md) (source) and
+> [`reports/final_report.pdf`](final_report.pdf). This `model_eval.md` is the
+> *index* document that the final report synthesises from.
 
 This file indexes **edge model** evaluation artefacts (PV / BESS CNN-1D and ONNX variants).
 The headline numbers below come from the last `python -m evaluation --compare` run on the
@@ -146,7 +144,7 @@ replay file (`data/orchestrator/events_c7_demo.jsonl`).
 | LLM agent benchmark (real Ollama) | `reports/agent_eval.md`, `reports/figures/agent_eval/`, `agent_eval/results/last_run_three_ablations_with_judge.{json,log}` |
 | Integration / latency / 10-node fan-out | `reports/integration_eval.md`, `reports/figures/integration/`, `reports/integration/e2e_latency_*.json`, `data/orchestrator/events.jsonl` |
 | Interactive fault injection (C7) | `dashboard/inject.py`, `dashboard/app.py` sidebar expander, `scripts/demo_fault_injection.py`, `reports/integration/fault_injection_demo.{md,json}`, `data/orchestrator/events_c7_demo.jsonl` |
-| **Final academic report (C8)** | `reports/final_report.md` (source) · `reports/final_report.html` (intermediate) · `reports/final_report.pdf` (24-page A4, ~2.3 MB) · `scripts/render_final_report.py` |
+| **Final academic report (C8)** | `reports/final_report.md` · `reports/final_report.pdf` |
 
 ## Regeneration
 
@@ -181,6 +179,4 @@ python scripts/render_integration_eval_report.py
 python scripts/demo_fault_injection.py `
     --events-path data/orchestrator/events_c7_demo.jsonl
 # Live interactive: streamlit run dashboard/app.py
-# Component 8 final report (markdown -> HTML -> Chrome headless -> PDF):
-python scripts/render_final_report.py
 ```

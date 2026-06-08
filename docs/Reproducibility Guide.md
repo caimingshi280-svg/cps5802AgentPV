@@ -6,7 +6,8 @@
 2. **从零训练模型并跑通整个项目**的完整流程（PowerShell，Windows）
 3. **终端分工、耗时、依赖关系、自检与常见问题**
 
-更细的文件级说明见 `**文件解读.md`**；模块设计见各子目录 `**README.md**`。
+更细的文件级说明见 [`Document Interpretation.md`](Document%20Interpretation.md)；模块设计见各子目录 `README.md`。  
+答辩 Streamlit 步骤见 [`Dashboard Demo Guide.md`](Dashboard%20Demo%20Guide.md)。
 
 > 下文默认仓库根目录为 `c:\Users\Mansycc\Desktop\omar`，请按你的实际路径修改 `cd` 命令。
 
@@ -25,7 +26,7 @@
   → 智能体评测 agent_eval（C5，需 Ollama）
   → 集成延迟 + 10 节点编排（C6）
   → 故障注入演示（C7）
-  → 生成各报告 / 终稿 PDF（C8）
+  → 子报告生成 + 维护终稿 PDF / PPT（C8）
   → （可选）Streamlit 仪表盘、Docker Compose 录屏
 ```
 
@@ -36,7 +37,7 @@
 | ----- | ----------- | ------------------------------------------- |
 | **A** | 边缘服务（长期运行）  | `uvicorn api.edge_service:app --port 8000`  |
 | **B** | 智能体服务（长期运行） | `uvicorn api.agent_service:app --port 8001` |
-| **C** | 训练、评测、脚本、编排 | 本文 §2 中其余所有命令                               |
+| **C** | 训练、评测、脚本、编排 | 本文 §3 中其余所有命令                               |
 
 
 **Ollama** 需在本机后台可用（非上述终端内）：`ollama serve`，且模型与 `configs/dev.yaml` 一致（默认 `llama3.2`）。
@@ -46,10 +47,10 @@
 
 | 若未完成的步骤                | 后果                                                       |
 | ---------------------- | -------------------------------------------------------- |
-| 未跑 §2.1 数据生成           | 无法训练                                                     |
-| 未跑 §2.2 训练             | 无 `.pt` 权重                                               |
-| 未跑 §2.3 ONNX/INT8      | `edge_service` 可能 **degraded** 或无法推理                     |
-| 未起 §2.7 的 8000/8001 服务 | `agent_eval`、延迟基准、编排器、C7 演示均会失败                          |
+| 未跑 §3.1 数据生成           | 无法训练                                                     |
+| 未跑 §3.2 训练             | 无 `.pt` 权重                                               |
+| 未跑 §3.3 ONNX/INT8      | `edge_service` 可能 **degraded** 或无法推理                     |
+| 未起 §3.7 的 8000/8001 服务 | `agent_eval`、延迟基准、编排器、C7 演示均会失败                          |
 | 未安装/未启动 Ollama         | `agent_eval --llm-backend ollama` 失败（可改用 `mock` 仅做连通性测试） |
 
 
@@ -60,12 +61,12 @@
 
 | 项         | 要求                                                                                              |
 | --------- | ----------------------------------------------------------------------------------------------- |
-| Python    | **3.10+**（与 `pyproject.toml` 一致）                                                                |
+| Python    | **3.11 或 3.12**（`pyproject.toml`：`>=3.11,<3.13`）                                                |
 | 安装依赖      | 仓库根目录：`pip install -e ".[dev]"`                                                                 |
 | 可选 `.env` | 复制 `.env.example` → `.env`（使用云端 OpenAI 兼容 API 时填写）                                              |
 | Ollama    | 真链路 `agent_eval` / `agent_service`（dev）：本机 `ollama serve`，且 `ollama pull llama3.2`（或与你配置一致的模型名） |
-| Docker    | 仅 **§2.13** 整系统演示 / 录屏需要；安装 **Docker Desktop** 后终端能执行 `docker compose version`                  |
-| 浏览器       | 生成 PDF 需要本机 **Chrome 或 Edge**（`scripts/render_final_report.py`）                                 |
+| Docker    | 仅 **§3.13** 整系统演示 / 录屏需要；安装 **Docker Desktop** 后终端能执行 `docker compose version`                  |
+| 浏览器       | 答辩演示 Streamlit 看板（`http://localhost:8501`）                                                       |
 
 
 ### 1.1 安装与自检
@@ -108,13 +109,13 @@ ollama pull llama3.2
 
 | 作业组件 / 交付物             | 要求要点                                              | 本项目对应证据（路径或命令）                                                     |
 | ---------------------- | ------------------------------------------------- | ------------------------------------------------------------------ |
-| **C1 数据**              | ≥50k 样本；PV≥7 类、BESS≥5 类；≥3 种工况；train/val/test 可复现 | `simulation/`；`docs/data_card.md`；§2.1                             |
-| **C2 模型**              | 多类；时序架构；≥1 种压缩；ONNX；≤50MB、CPU P95≤100ms           | `models/cnn1d.py`；`quantization/`；§2.2–2.3；`reports/model_eval.md` |
-| **C3 评估**              | Macro-F1、混淆矩阵、P95、压缩权衡、≥2 变体                      | §2.4 `python -m evaluation --compare`                              |
-| **C4 智能体**             | ReAct；≥30 文档 RAG；四工具；结构化输出                        | `agent/workflows/react.py`；`rag/`；`tools/`；§2.6–2.7                |
-| **C5 评测**              | ≥30 场景；消融；评分；可选 LLM-as-judge                      | `agent_eval/`；§2.8                                                 |
-| **C6 集成**              | ≥10 节点；E2E P95≤10s；Compose；三模式                    | `pv6_bess4`；§2.9；`docker-compose.yml`                              |
-| **C7 原型**              | Web 仪表盘；交互演示                                      | `dashboard/`；§2.10–2.11                                            |
+| **C1 数据**              | ≥50k 样本；PV≥7 类、BESS≥5 类；≥3 种工况；train/val/test 可复现 | `simulation/`；`docs/data_card.md`；§3.1                             |
+| **C2 模型**              | 多类；时序架构；≥1 种压缩；ONNX；≤50MB、CPU P95≤100ms           | `models/cnn1d.py`；`quantization/`；§3.2–3.3；`reports/model_eval.md` |
+| **C3 评估**              | Macro-F1、混淆矩阵、P95、压缩权衡、≥2 变体                      | §3.4 `python -m evaluation --compare`                              |
+| **C4 智能体**             | ReAct；≥30 文档 RAG；四工具；结构化输出                        | `agent/workflows/react.py`；`rag/`；`tools/`；§3.6–3.7                |
+| **C5 评测**              | ≥30 场景；消融；评分；可选 LLM-as-judge                      | `agent_eval/`；§3.8                                                 |
+| **C6 集成**              | ≥10 节点；E2E P95≤10s；Compose；三模式                    | `pv6_bess4`；§3.9；`docker-compose.yml`                              |
+| **C7 原型**              | Web 仪表盘；交互演示                                      | `dashboard/`；§3.10–3.11；[`Dashboard Demo Guide.md`](Dashboard%20Demo%20Guide.md) |
 | **交付物**                | Data Card、Dataset、Edge Model、各报告、Final Report     | `docs/`、`data/`、`quantization/artifacts/`、`reports/`               |
 | **Final Presentation** | 现场演示与答辩                                           | 课堂完成，不在仓库命令内                                                       |
 
@@ -245,7 +246,7 @@ cd c:\Users\Mansycc\Desktop\omar
 python -m evaluation --compare
 ```
 
-**产出**：`reports/pv/`、`reports/bess/` 下各变体 `summary.md` / `summary.json`，以及 `reports/model_eval.md` 总览链接。
+**产出**：`reports/pv/`、`reports/bess/` 下各变体 `summary.md` / `summary.json`、`comparison.md`，以及手写总览 `reports/model_eval.md`（索引子报告链接与关键数字）。
 
 **其它用法**（见 `evaluation/__main__.py`）：
 
@@ -433,31 +434,19 @@ streamlit run dashboard/app.py
 
 浏览器访问：**[http://localhost:8501](http://localhost:8501)**
 
-**答辩演示步骤与旁白文案**：见 `[docs/网页演示指南.md](docs/网页演示指南.md)`（含一键场景、流水线四格、Tab 浏览顺序）。
+**答辩演示**：完整步骤与 5 分钟讲稿见 [`Dashboard Demo Guide.md`](Dashboard%20Demo%20Guide.md)。
 
 ---
 
-### 3.12 生成终稿 PDF（C8）
+### 3.12 终稿报告与答辩幻灯片（C8 / Presentation）
 
-```powershell
-cd c:\Users\Mansycc\Desktop\omar
+| 交付物 | 路径 |
+|--------|------|
+| 终稿 Markdown 源稿 | `reports/final_report.md` |
+| 终稿 PDF | `reports/final_report.pdf` |
+| 答辩 PPT | `reports/AgentPV_Final_Presentation.pptx` |
 
-python scripts/render_final_report.py
-```
-
-**产出**：`reports/final_report.html`、`reports/final_report.pdf`（需本机 Chrome/Edge）。
-
-若 `reports/final_report.pdf` 被 PDF 阅读器占用无法覆盖：
-
-```powershell
-python scripts/render_final_report.py --pdf reports/final_report_new.pdf
-```
-
-仅生成 HTML、不调用浏览器：
-
-```powershell
-python scripts/render_final_report.py --skip-pdf
-```
+修改子报告数字后，请手工同步 `reports/final_report.md`，并在 Word / 浏览器中重新导出 PDF 与 PPTX。
 
 ---
 
@@ -481,7 +470,7 @@ docker compose up --build
 | [http://localhost:8001/healthz](http://localhost:8001/healthz) | Agent     |
 
 
-录屏检查清单：`**reports/docker_compose_demo.md`**。
+录屏检查：确认 §3.13 表中 8501 / 8000 / 8001 health 均为 200，Dashboard 能打开事件时间线。
 
 结束：
 
@@ -546,9 +535,8 @@ python scripts/e2e_latency_bench.py --mode cloud_only --iterations 50 --warmup 3
 python -m orchestrator --nodes pv6_bess4 --duration 60 --http-timeout 120 --out data/orchestrator/events.jsonl
 python scripts/render_integration_eval_report.py
 
-# ========== 10 C7 + PDF ==========
+# ========== 10 C7 故障注入演示 ==========
 python scripts/demo_fault_injection.py --events-path data/orchestrator/events_c7_demo.jsonl
-python scripts/render_final_report.py
 
 # ========== 11 可选 ==========
 # streamlit run dashboard/app.py
@@ -579,9 +567,9 @@ Test-Path reports\model_eval.md
 Test-Path reports\agent_eval.md
 Test-Path reports\integration_eval.md
 Test-Path reports\final_report.md
-# PDF 二选一：
 Test-Path reports\final_report.pdf
-Test-Path reports\final_report_new.pdf
+Test-Path reports\AgentPV_Final_Presentation.pptx
+Test-Path reports\integration\fault_injection_demo.md
 ```
 
 ### 5.3 服务连通性（手动）
@@ -606,9 +594,8 @@ Test-Path reports\final_report_new.pdf
 | Ollama 连接失败                   | `ollama serve`；`ollama list`；核对 `configs/dev.yaml` 与 `AGENTPV_OLLAMA_*` |
 | `agent_eval` 极慢或超时            | 正常（真 LLM）；可先用 `--llm-backend mock` 验证管线                                 |
 | `agent_recommend_failed` / 超时 | Agent 默认 HTTP 超时 10s；见 `reports/integration_eval.md` 说明                 |
-| PDF 生成失败                      | 安装 Chrome/Edge；或 `--skip-pdf` 后浏览器打开 HTML 打印                            |
-| `final_report.pdf` 无法写入       | 关闭占用该文件的 PDF 阅读器；或 `--pdf reports/final_report_new.pdf`                 |
-| Docker 找不到命令                  | 安装 Docker Desktop，**重启终端**；见 `reports/docker_compose_demo.md`           |
+| 终稿 PDF 无法保存                   | 关闭占用该文件的 PDF 阅读器后，在 Word / 浏览器中重新导出并覆盖 `reports/` 下交付文件              |
+| Docker 找不到命令                  | 安装 Docker Desktop，**重启终端**；见本文 §3.13                                    |
 | `rag.ingest` 很慢               | 首次下载嵌入模型；确保网络可达 Hugging Face                                            |
 | PowerShell 续行符                | 多行命令末尾使用反引号 ```（反引号前有空格）                                                |
 
@@ -618,15 +605,16 @@ Test-Path reports\final_report_new.pdf
 ## 7. 与仓库其他文档的关系
 
 
-| 文档                                      | 作用                                                   |
-| --------------------------------------- | ---------------------------------------------------- |
-| `文件解读.md`                               | 每个目录/主要源文件用途索引                                       |
-| `README.md`                             | 项目总览、架构、英文快速索引                                       |
-| `各子包/README.md`                         | 模块级设计（如 `training/README.md`、`agent_eval/README.md`） |
-| `scripts/README.md`                     | 各脚本入口与推荐顺序                                           |
-| `reports/docker_compose_demo.md`        | Docker 录屏检查清单                                        |
-| `开发记录.md`                               | 分 Session 开发日志与历史决策                                  |
-| `assignment.md` / `assignmenchinese.md` | 课程作业原文                                               |
+| 文档 | 作用 |
+|------|------|
+| `docs/README.md` | 文档与交付物总索引 |
+| `Document Interpretation.md` | 每个目录/主要源文件用途 |
+| `Dashboard Demo Guide.md` | Streamlit 答辩演示 |
+| `data_card.md` | Component 1 数据卡片 |
+| `README.md`（根目录） | 项目总览、架构 |
+| 各子包 `README.md` | 模块级设计 |
+| `scripts/README.md` | 评测脚本入口与顺序 |
+| `CPS-5802-Project-SP26.pdf` | 课程作业原文 |
 
 
 ---

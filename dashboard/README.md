@@ -1,4 +1,4 @@
-# `dashboard/` — Streamlit 操作员仪表盘（Component 6）
+# `dashboard/` — Streamlit 操作员仪表盘（Component 7）
 
 按规则 §24 的 14 节工程文档。本模块是 AgentPV 的**前端层**——读 orchestrator
 写出的 JSONL 事件流并按操作员视角渲染。代码严格分两层：纯函数数据层
@@ -20,7 +20,8 @@ polish 阶段加 auto-refresh + 推送通知。
   agent reasoning"
 - 没有 dashboard，agent 的 reasoning trace 只能在日志里翻——操作员体验 0
 - 在答辩展示时，dashboard 是把整个三层系统讲清楚的最直接载体（节点总览 →
-  时间线 → 单事件 reasoning → 全局统计）
+  时间线 → 单事件 reasoning → 全局统计）。现场步骤见
+  `docs/Dashboard Demo Guide.md`。
 
 ---
 

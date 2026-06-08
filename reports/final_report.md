@@ -1,18 +1,8 @@
 <!--
   AgentPV — Final academic report (Deliverable §3, project rule §27).
 
-  This master document is HAND-WRITTEN to be the single deliverable PDF.
-  It re-uses the figures already produced by:
-    scripts/render_agent_eval_report.py
-    scripts/render_integration_eval_report.py
-    scripts/run_robustness_eval.py
-    evaluation/compare_variants.py
-  and quotes the headline numbers from the individual sub-reports listed in
-  §11 (so any change there must be reflected here).
-
-  Build to PDF::
-
-      python scripts/render_final_report.py
+  Master C8 deliverable. Figures and headline numbers are cross-checked
+  against the sub-reports listed in §11. Export to PDF manually when updating.
 -->
 
 # AgentPV: An End-to-End Fault Diagnosis and Reasoning Pipeline for PV / BESS Systems
@@ -191,7 +181,7 @@ survive per-tensor MinMax INT8 quantisation with no measurable macro-F1 loss.
 in narrow numeric bands of `R_est`, `σ_V`, and SoC-trajectory features;
 per-tensor MinMax INT8 collapses these distinctions. This is the **canonical
 accuracy / size trade-off** that §4.3 asks teams to characterise. Two
-in-budget remediations are documented in `开发记录.md` for future work:
+in-budget remediations are documented in `reports/bess/comparison.md` for future work:
 (a) Entropy / KL calibration via
 `onnxruntime.quantization.CalibrationMethod.Entropy`, and (b) per-channel
 weight quantisation. Until either lands, **production deployment defaults to
@@ -625,9 +615,8 @@ python scripts/e2e_latency_bench.py --mode cloud_only --iterations 50 --warmup 3
 python -m orchestrator --nodes pv6_bess4 --duration 60 --http-timeout 120 --out data/orchestrator/events.jsonl
 python scripts/render_integration_eval_report.py
 
-# 5. Interactive demo + this final PDF
+# 5. Interactive demo (C7)
 python scripts/demo_fault_injection.py --events-path data/orchestrator/events_c7_demo.jsonl
-python scripts/render_final_report.py
 ```
 
 ### 11.4 External references

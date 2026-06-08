@@ -78,8 +78,13 @@ reports/figures/*
 reports/robustness/**/figures/*
 !reports/robustness/**/figures/.gitkeep
 
-# HTML export of final report (regenerate from final_report.md)
+# Stale HTML exports (not a deliverable)
 reports/final_report.html
+
+# Duplicate submission PDFs at repo root (canonical copies live under reports/)
+1356509*.pdf
+*'s final_report.pdf
+*'s AgentPV_Final_Presentation.pdf
 
 # Stale one-off report snapshots (canonical: reports/agent_eval.md)
 reports/agent_eval_last_run*.md

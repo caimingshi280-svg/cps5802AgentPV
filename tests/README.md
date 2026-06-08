@@ -1,7 +1,8 @@
 # tests — 自动化测试
 
 本目录保证 **契约、训练管线、评测、智能体编排、HTTP 服务** 等在 CI 与本地可重复验证。  
-默认使用 `APP_ENV=test`（见 `conftest.py`），避免写真实 `data/version.txt` 或外网调用。
+默认使用 `APP_ENV=test`（见 `conftest.py`），避免写真实 `data/version.txt` 或外网调用。  
+全量约 **284** 条用例（`pytest tests -q`）。
 
 ## 结构
 

@@ -1,30 +1,56 @@
-# docs — 对外文档与模式
+# docs — 文档索引
 
-与「运行时代码」并列的**说明性资产**：数据卡片、答辩材料、复现指南等。
+与运行时代码并列的**说明性资产**：作业对照、复现步骤、数据卡片、答辩演示等。
 
-## 答辩 / 作业
+---
 
-| 文件 | 说明 |
-|------|------|
-| `复现指南.md` | 全链路复现命令与自检清单 |
-| `ppt制作指南.md` | PPT 逐页英文内容 + 中英旁白源稿 |
-| `ppt旁白.md` | 仅旁白（主汇报 Slide 1–30） |
-| `Q&A.md` | 答辩 Q&A（中英 + 对应幻灯片） |
-| `网页演示指南.md` | Streamlit 现场演示步骤 |
-| `文件解读.md` | 仓库目录与文件索引 |
-| `开发记录.md` | 开发过程日志 |
-| `AgentPV-项目方案.md` | 模块设计方案 |
-| `assignment.md` / `assignmenchinese.md` | 课程作业原文 |
-
-## 数据与契约
+## 当前文件一览（`docs/`）
 
 | 文件 | 说明 |
 |------|------|
-| `data_card.md` | **Data Card**（Component 1 交付物） |
-| `alert_schema.json` | 边缘 → 云端告警 JSON Schema |
+| [`Reproducibility Guide.md`](Reproducibility%20Guide.md) | **主复现文档**：作业 C1–C8 对照、PowerShell 命令、自检与 FAQ |
+| [`Document Interpretation.md`](Document%20Interpretation.md) | 仓库目录与主要源文件用途索引 |
+| [`Dashboard Demo Guide.md`](Dashboard%20Demo%20Guide.md) | Streamlit 答辩现场演示（约 5 分钟） |
+| [`data_card.md`](data_card.md) | Component 1 数据卡片 |
+| [`alert_schema.json`](alert_schema.json) | 边缘 → 云端告警 JSON Schema |
+| [`AgentPV-项目方案.md`](AgentPV-%E9%A1%B9%E7%9B%AE%E6%96%B9%E6%A1%88.md) | 模块工程方案与规划 |
+| [`CPS-5802-Project-SP26.pdf`](CPS-5802-Project-SP26.pdf) | 课程作业原文 PDF |
 
-## 维护建议
+---
 
-- 修改仿真参数或类别后，同步更新 `data_card.md`。  
-- 修改 `ppt制作指南.md` 后运行：`python scripts/extract_presentation_narration.py`  
-- 生成 PPT：`python scripts/render_presentation.py --verify`
+## 交付物（`reports/`）
+
+| 文件 | 组件 |
+|------|------|
+| `model_eval.md` + `pv/`、`bess/` | C3 模型评测 |
+| `robustness_eval.md` | 鲁棒性 / OOD 扩展 |
+| `agent_eval.md` | C5 智能体评测 |
+| `integration_eval.md` + `integration/` | C6 集成与延迟 |
+| `integration/fault_injection_demo.md` | C7 脚本化五场景 |
+| `final_report.md` / `final_report.pdf` | C8 学术终稿 |
+| `AgentPV_Final_Presentation.pptx` | Final Presentation 幻灯片 |
+
+子报告由 `scripts/render_*` 或 `python -m evaluation` 生成后，**手工同步**终稿 `final_report.md` 与 PDF / PPTX。
+
+---
+
+## 推荐阅读顺序
+
+**答辩前自检**
+
+1. `Reproducibility Guide.md` §5 自检清单  
+2. `Dashboard Demo Guide.md` 彩排 Streamlit  
+3. 打开 `reports/final_report.pdf` 与 `AgentPV_Final_Presentation.pptx` 核对数字一致  
+
+**读代码**
+
+1. `Document Interpretation.md` → 定位源文件  
+2. 对应子包 `README.md`（如 `agent/README.md`）  
+
+---
+
+## 维护提示
+
+- 改仿真规模或类别 → 更新 `data_card.md`  
+- 重跑评测脚本 → 同步 `reports/final_report.md` 与 PDF  
+- 答辩演示默认 **本机 uvicorn + Streamlit**，勿与 `docker compose` 同时占用 8000 / 8001 / 8501  

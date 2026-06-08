@@ -19,23 +19,20 @@
 | `projectdesignrules.cursorrules` | 协作与工程规则（Cursor / 团队约定）。 |
 | `docs/` | **中文文档、答辩材料、Data Card**（见 `docs/README.md`）。 |
 | `reports/` | 评测报告、终稿 PDF/PPTX、混淆矩阵等交付物。 |
-| `scripts/` | 一键评测、报告渲染、PPT 生成等 CLI。 |
+| `scripts/` | 一键评测、子报告渲染、压测与演示等 CLI。 |
 
 ### 1.1 `docs/` — 说明性文档
 
 | 文件 | 用途 |
 |------|------|
-| `assignment.md` / `assignmenchinese.md` | 课程作业说明 |
-| `AgentPV-项目方案.md` | 项目工程方案与模块规划 |
-| `复现指南.md` | 作业逐条对照 + 完整复现步骤 |
-| `ppt制作指南.md` | Final Presentation 逐页英文幻灯 + 中英旁白源稿 |
-| `ppt旁白.md` | 仅旁白稿（主汇报 Slide 1–30） |
-| `Q&A.md` | 答辩 Q&A 手册 |
-| `网页演示指南.md` | C7 Streamlit 现场演示步骤 |
-| `文件解读.md` | **本文件** |
-| `开发记录.md` | 分 Session 开发日志 |
+| `Reproducibility Guide.md` | 作业逐条对照 + 完整复现步骤 |
+| `Document Interpretation.md` | **本文件** |
+| `Dashboard Demo Guide.md` | Streamlit 答辩现场演示（约 5 分钟） |
 | `data_card.md` | Component 1 数据卡片 |
 | `alert_schema.json` | 边缘 → 云端告警 JSON Schema |
+| `AgentPV-项目方案.md` | 项目工程方案与模块规划 |
+| `CPS-5802-Project-SP26.pdf` | 课程作业原文 |
+| `README.md` | 本目录索引 |
 
 ---
 
@@ -197,7 +194,6 @@
 | `run_robustness_eval.py` | 鲁棒性 / OOD / selective prediction 主评估。 |
 | `render_agent_eval_report.py` | 从 agent_eval JSON 生成 `reports/agent_eval.md` 与图表。 |
 | `render_integration_eval_report.py` | C6 集成评估报告与图。 |
-| `render_final_report.py` | 终稿 Markdown → HTML → PDF。 |
 | `e2e_latency_bench.py` | 端到端延迟基准（full / edge_only / cloud_only）。 |
 | `demo_fault_injection.py` | C7 故障注入演示与报告。 |
 | `bootstrap_kb_documents.py` | 知识库文档 bootstrap。 |
@@ -218,17 +214,7 @@
 
 ---
 
-## 5. `docs/` — 文档与模式
-
-| 文件 | 用途 |
-|------|------|
-| `data_card.md` | **Data Card**：数据集模式、分布、局限（作业交付物 #1）。 |
-| `alert_schema.json` | 边缘 → 云端 **固定 JSON 告警** JSON Schema。 |
-| `README.md` | 文档目录说明。 |
-
----
-
-## 6. `docker/` — 容器构建
+## 5. `docker/` — 容器构建
 
 | 文件 | 用途 |
 |------|------|
@@ -239,19 +225,20 @@
 
 ---
 
-## 7. `reports/` — 报告与图表（生成物 / 终稿）
+## 6. `reports/` — 报告与图表（生成物 / 终稿）
 
 | 类型 | 用途 |
 |------|------|
 | `model_eval.md` | 模型与评测总览、子报告链接。 |
 | `agent_eval.md` / `integration_eval.md` / `robustness_eval.md` 等 | 各子系统评估正文。 |
-| `final_report.md` / `final_report.html` / `final_report*.pdf` | 期末技术报告与 PDF。 |
+| `final_report.md` / `final_report.pdf` | C8 期末技术报告。 |
+| `AgentPV_Final_Presentation.pptx` | Final Presentation 答辩幻灯片。 |
+| `integration/fault_injection_demo.md` | C7 五场景脚本化报告。 |
 | `figures/**` | 各报告配套 PNG（matplotlib 导出）。 |
-| `docker_compose_demo.md` | Docker 演示与录屏检查清单。 |
 
 ---
 
-## 8. `data/` — 数据目录（多数被 gitignore）
+## 7. `data/` — 数据目录（多数被 gitignore）
 
 | 子目录 / 文件 | 用途 |
 |---------------|------|
@@ -261,13 +248,14 @@
 
 ---
 
-## 9. 未发现可安全删除的「无用源码」
+## 8. 未发现可安全删除的「无用源码」
 
 当前 **99 个 `.py` 文件**均有测试引用或明确入口；`scripts/` 下带下划线脚本为工具用途。若后续出现一次性迁移脚本，删除前请再全局搜索引用。
 
 ---
 
-## 10. 延伸阅读
+## 9. 延伸阅读
 
-- 作业对照与一键复现：见 **`复现指南.md`**。  
-- 工程规则：见 **`projectdesignrules.cursorrules`** 与根目录 **`README.md`**。
+- 作业对照与一键复现：见 [`Reproducibility Guide.md`](Reproducibility%20Guide.md)。  
+- 答辩 Streamlit 演示：见 [`Dashboard Demo Guide.md`](Dashboard%20Demo%20Guide.md)。  
+- 工程规则：见 `projectdesignrules.cursorrules` 与根目录 `README.md`。

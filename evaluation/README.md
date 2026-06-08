@@ -206,8 +206,8 @@ Python + numpy + sklearn + matplotlib + onnxruntime.
 
 Runner-level integration is exercised live via
 `python -m evaluation --variants pytorch_fp32 onnx_fp32 onnx_int8 --compare`
-against the real PV + BESS artefacts (see `开发记录.md` Session 12
-for numbers).
+against the real PV + BESS artefacts (headline numbers in
+`reports/model_eval.md` and `reports/pv/comparison.md`).
 
 ---
 
